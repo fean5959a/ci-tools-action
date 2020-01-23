@@ -1,0 +1,24 @@
+{
+  "name": "ci-tools-action",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fean5959a/ci-tools-action.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fean5959a/ci-tools-action/issues"
+  },
+  "homepage": "https://github.com/fean5959a/ci-tools-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.1",
+    "@actions/github": "^2.0.1"
+  }
+}
