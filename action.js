@@ -2,27 +2,30 @@ const core = require('@actions/core');
 // const github = require('@actions/github');
 const path = require('path')
 const tc = require('@actions/tool-cache');
+const fs = require('fs');
 
-function setupCITools() {
+async function setupCITools() {
     const variableInput = core.getInput('variables', { required: false });
     exportInputVariable(variableInput);
     const oc_client = (core.getInput('oc_client') || 'true').toUpperCase() === 'TRUE';
 
-    if(oc_client) {
+    if (oc_client) {
         const oc_client_url = core.getInput('oc_client_url', { required: true });
         const ocClientPath = await tc.downloadTool(oc_client_url);
         const ocCLientExtractedFolder = await tc.extractTar(ocClientPath, process.env.RUNNER_TEMP);
         ocBinary = path.join(ocCLientExtractedFolder, 'oc');
-        console.log("ocBinary="+ocBinary);
-        const cachedPath = await tc.cacheDir(ocBinary, 'oc', '1');
-        core.addPath(cachedPath);
-        core.setOutput("oc", cachedPath);
-        console.log("Output variable: oc="+cachedPath);
+        fs.chmodSync(ocBinary, '0755');
+        console.log("Set output variable: oc=" + ocBinary);
+        core.setOutput("oc", ocBinary);
+        console.log("Export variable: OC_BIN=" + ocBinary);
+        core.exportVariable('OC_BIN', ocBinary)
     }
 
     script_path = path.join(__dirname, 'scripts')
+    console.log("Set output variable: scripts=" + script_path)
     core.setOutput("scripts", script_path);
-    console.log("Output variable: scripts="+script_path)
+    console.log("Export variable: CI_TOOLS_DIR=" + script_path);
+    core.exportVariable('CI_TOOLS_DIR', script_path)
 }
 
 function exportInputVariable(variableInput) {
@@ -36,10 +39,8 @@ function exportInputVariable(variableInput) {
     const output = [];
     for (const varToExport of vars) {
         let path = varToExport;
-        let outputName = null;
 
-        const pathParts = path
-            .split(/\|+/)
+        const pathParts = path.split(/\|+/)
             .map(part => part.trim())
             .filter(part => part.length !== 0);
 
@@ -47,8 +48,9 @@ function exportInputVariable(variableInput) {
             throw Error(`You must provide a valid variable and variable value. Input: "${variableInput}"`)
         }
 
-        const [varName, varValue] = pathParts;
-        console.log("  - "+varName+"="+varValue);
+        var [varName, varValue] = pathParts;
+        varValue = varValue.replace(/"/g, '');
+        console.log("  - " + varName + "=" + varValue);
         core.exportVariable(varName, varValue);
     }
 }

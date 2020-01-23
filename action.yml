@@ -4,11 +4,16 @@ inputs:
   oc_client:
     description: 'Get Openshift client'
     required: false
+  oc_client_url:
+    description: 'Required if oc_client = true'
+    required: false
   variables:
     description: 'Variables to export'
     required: false
 outputs:
-  scripts: # id of output
+  scripts:
+    description: 'Action scripts path'
+  oc:
     description: 'Action scripts path'
 runs:
   using: 'node12'
