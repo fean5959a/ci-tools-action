@@ -1,8 +1,12 @@
 name: 'ADEO CI tools'
 description: ''
+inputs:
+  variables:
+    description: 'Variables to export'
+    required: false
 outputs:
-    scripts: # id of output
-      description: 'Action scripts path'
+  scripts: # id of output
+    description: 'Action scripts path'
 runs:
   using: 'node12'
   main: 'index.js'
