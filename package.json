@@ -19,6 +19,7 @@
   "homepage": "https://github.com/fean5959a/ci-tools-action#readme",
   "dependencies": {
     "@actions/core": "^1.2.1",
-    "@actions/github": "^2.0.1"
+    "@actions/github": "^2.0.1",
+    "path": "^0.12.7"
   }
 }

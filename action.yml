@@ -1,5 +1,8 @@
 name: 'ADEO CI tools'
 description: ''
+outputs:
+    scripts: # id of output
+      description: 'Action scripts path'
 runs:
   using: 'node12'
   main: 'index.js'
