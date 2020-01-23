@@ -19,7 +19,6 @@ function exportInputVariable(variableInput) {
         .map(key => key.trim())
         .filter(key => key.length !== 0);
 
-    /** @type {{ secretPath: string; outputName: string; dataKey: string; }[]} */
     const output = [];
     for (const varToExport of vars) {
         let path = varToExport;
@@ -31,7 +30,7 @@ function exportInputVariable(variableInput) {
             .filter(part => part.length !== 0);
 
         if (pathParts.length !== 2) {
-            throw Error(`You must provide a valid variable and variable value. Input: "${secret}"`)
+            throw Error(`You must provide a valid variable and variable value. Input: "${variableInput}"`)
         }
 
         const [varName, varValue] = pathParts;
