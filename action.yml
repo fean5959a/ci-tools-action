@@ -1,6 +1,9 @@
 name: 'ADEO CI tools'
 description: ''
 inputs:
+  oc_client:
+    description: 'Get Openshift client'
+    required: false
   variables:
     description: 'Variables to export'
     required: false

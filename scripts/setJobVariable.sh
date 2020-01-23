@@ -4,25 +4,7 @@ function setJobVariable {
     echo "::set-env name=${1}::${2}"
 }
 
-if [ -z "${BRANCH_NAME}" ]; then
-  export BRANCH_NAME="$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')"
-  setJobVariable BRANCH_NAME "${BRANCH_NAME}"
-fi
-
-export IMAGE_NAME="${APP_NAME}"
-setJobVariable IMAGE_NAME "${IMAGE_NAME}"
-
-export BASE_IMAGE_NAME="$(echo vault/${APP_NAME}-base)"
-setJobVariable BASE_IMAGE_NAME "${BASE_IMAGE_NAME}"
-
-export IMAGE_PATH="$(echo vault/${APP_NAME})"
-setJobVariable IMAGE_PATH "${IMAGE_PATH}"
-
-export KUB_ROLE_NAME_ENV="${GITHUB_REF#refs/heads/}"
-setJobVariable KUB_ROLE_NAME_ENV "${KUB_ROLE_NAME_ENV}"
-
-
-if [ -z "${IMAGE_TAG}" ]; then
+if [ -z "${IMAGE_NAME}" ]; then
     export IMAGE_TAG="${IMAGE_VERSION}-${BRANCH_NAME}"
     setJobVariable IMAGE_TAG "${IMAGE_TAG}"
 fi
