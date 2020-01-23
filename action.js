@@ -25,7 +25,7 @@ function exportInputVariable(variableInput) {
         let outputName = null;
 
         const pathParts = path
-            .split(/\s+/)
+            .split(/\|+/)
             .map(part => part.trim())
             .filter(part => part.length !== 0);
 
