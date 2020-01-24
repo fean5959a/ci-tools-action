@@ -33,17 +33,5 @@ if [ -z "${VAULT_WRITE_SECRET_PATH}" ]; then
   exit 1
 fi
 
-if [ ! -f vault.token ]; then
-  sh ./vault-ci-tools/vaultDecryptToken.sh
-
-  if [ ! -f vault.token ]; then
-    echo "[ERROR] No Vault token file."
-    exit 1
-  fi
-fi
-
-VAULT_TOKEN=$(head -n 1 vault.token)
-export VAULT_TOKEN
-
 echo "Write secret ${VAULT_WRITE_SECRET_PATH}"
 curl -H "X-Vault-Token:${VAULT_TOKEN}" -H "X-Vault-Namespace:${VAULT_NAMESPACE}" --request POST --data '{"options":{},"data":'"${VAULT_SECRET_DATA}"'}' "${VAULT_ADDR}/v1/${SECRET_BACKEND}/data/${VAULT_WRITE_SECRET_PATH}"
