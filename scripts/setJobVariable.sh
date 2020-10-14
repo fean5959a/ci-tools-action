@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function setJobVariable {
-    echo "::set-env name=${1}::${2}"
+    echo "${1}=${2}" >> $GITHUB_ENV
 }
 
 if [ -z "${IMAGE_NAME}" ]; then
