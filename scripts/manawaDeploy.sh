@@ -51,6 +51,7 @@ function process_kub_file {
   echo " - Deploy to Openshift"
   ${OC_BIN} --insecure-skip-tls-verify apply -f "${KUB_FILE_DIR}/${_KUB_FILE}" || exit 1
   echo " - >> Deploy ${KUB_FILE_DIR}/${_KUB_FILE}: done"
+  cat ${KUB_FILE_DIR}/${_KUB_FILE}
 }
 
 for KUB_FILE in $(echo "${KUB_FILES}" | sed 's/,/ /g'); do
